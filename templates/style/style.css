@@ -23,6 +23,55 @@ body {
 body .hidden {
   display: none;
 }
+body #blockedPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(128, 128, 128, 0.4588235294);
+  z-index: 1;
+  pointer-events: none;
+}
+body #blockedPage .spinner {
+  position: absolute;
+  display: inline-block;
+  align-self: center;
+  top: 50vh;
+  right: 50%;
+  height: 60px;
+  width: 60px;
+  transform: translate(50%, 0);
+}
+body #blockedPage .spinner div {
+  position: absolute;
+  display: block;
+  height: 60px;
+  width: 60px;
+  box-sizing: border-box;
+  border: 6px solid #fff;
+  border-color: #FFF transparent transparent transparent;
+  border-radius: 50%;
+  animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+body #blockedPage .spinner div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+body #blockedPage .spinner div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+body #blockedPage .spinner div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 body .elipse {
   display: flex;
   align-items: center;
@@ -31,20 +80,43 @@ body .elipse {
   width: 3vh;
   padding: 30px;
   border-radius: 50%;
-  box-shadow: 0 0 7px 1px #adadad;
 }
-body .elipse.plus {
+body .elipse.yellow {
+  background-color: inherit;
+  border: 3px solid var(--sunglow);
+}
+body .elipse.yellow svg {
+  fill: var(--sunglow);
+}
+body .elipse.yellow.active {
   background-color: var(--sunglow);
 }
-body .elipse.list {
+body .elipse.orange {
+  background-color: inherit;
+  border: 3px solid var(--chocolate-web);
+}
+body .elipse.orange svg {
+  fill: var(--chocolate-web);
+}
+body .elipse.orange.active {
   background-color: var(--chocolate-web);
 }
-body .elipse.user {
+body .elipse.red {
+  background-color: inherit;
+  border: 3px solid var(--carnelian);
+}
+body .elipse.red svg {
+  fill: var(--carnelian);
+}
+body .elipse.red.active {
   background-color: var(--carnelian);
 }
 body .elipse svg {
   height: 80px;
   width: 80px;
+}
+body .elipse.active svg {
+  fill: #FFF;
 }
 body header {
   position: relative;
@@ -63,16 +135,31 @@ body header h1 {
   text-fill-color: transparent;
 }
 body header h1 span:nth-of-type(1) {
-  margin-right: -10vw;
+  margin-right: -11vw;
 }
 body header h1 span:nth-of-type(2) {
-  margin-left: -12vw;
+  margin-left: -13vw;
 }
 body header h1 svg {
   height: 20vw;
 }
 body .page-content {
   font-family: "Montserrat", sans-serif;
+}
+body .page-content .new-bet-btn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  width: 155px;
+  padding: 10px;
+  color: #FFF;
+  background-color: var(--chocolate-web);
+  font-weight: 500;
+  border-radius: 10px;
+}
+body .page-content .new-bet-btn p {
+  margin: 0;
 }
 body .page-content .bet-elem {
   position: relative;
@@ -81,7 +168,7 @@ body .page-content .bet-elem {
   margin: 3vw;
   padding: 6vw;
   font-size: 4.5vw;
-  background-color: rgba(220, 113, 38, 0.1490196078);
+  border: 3px solid var(--chocolate-web);
   border-radius: 10px;
 }
 body .page-content .bet-elem h2 {
@@ -97,24 +184,62 @@ body .page-content .bet-elem .statut {
   width: 55px;
   padding: 2vh 4vw;
   text-align: center;
-  color: #FFF;
+  color: #000;
   font-size: 3.5vw;
   font-weight: bold;
+  border: 3px solid #000;
   border-radius: 10px;
 }
 body .page-content .bet-elem .statut.ouvert {
-  background-color: var(--avocado);
+  color: var(--avocado);
+  border-color: var(--avocado);
 }
 body .page-content .bet-elem .statut.terminé {
-  background-color: var(--carnelian);
+  color: var(--carnelian);
+  border-color: var(--carnelian);
 }
 body .page-content .bet-elem .statut.archivé {
-  background-color: var(--granite-gray);
+  color: var(--granite-gray);
+  border-color: var(--granite-gray);
 }
-body .page-content .bet-elem .showBet_js {
+body .page-content .bet-elem span:has(svg) {
   position: absolute;
   top: 10px;
   right: 20px;
+}
+body .page-content .bet-elem ul {
+  padding: 0;
+}
+body .page-content .bet-elem ul li.vote-elem {
+  align-items: center;
+}
+body .page-content .bet-elem ul li.vote-elem.voted {
+  display: flex;
+  padding: 10px;
+  background-color: rgba(220, 113, 38, 0.2196078431);
+}
+body .page-content .bet-elem ul li.vote-elem.no-vote {
+  text-align: center;
+  background-color: inherit;
+}
+body .page-content .bet-elem ul li.vote-elem.form {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgba(220, 113, 38, 0.2196078431);
+}
+body .page-content .bet-elem ul li.vote-elem.form > div {
+  display: flex;
+  gap: 10px;
+}
+body .page-content .bet-elem .btn-box {
+  display: flex;
+  justify-content: center;
+}
+body .page-content#homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 body .page-content#homePage .elipse {
   margin: 2vh auto;

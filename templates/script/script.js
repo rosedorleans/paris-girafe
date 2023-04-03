@@ -5,13 +5,30 @@ let serverURL = window.location.protocol + "//" + window.location.host + window.
 console.log('serverURL:', serverURL)
 
 $(document).ready( async function () {
+    loader(true)
     createNav()
-    
+    await getBetList()
+    allowActions()
+})
+
+function loader(isStart){
+    if(isStart){
+        $('#blockedPage').css('display', 'block')
+        $('header, .page-content').css('pointer-events', 'none')
+    } else {
+        $('#blockedPage').css('display', 'none')
+        $('header, .page-content').css('pointer-events', 'auto')
+    }
+}
+
+async function getBetList(){
+
     await $.ajax({	
         url : 'http://localhost/projets-perso/paris-girafe/index.php/bet/',
         type : 'GET',
         success : function(response){
             console.log(response);
+            $('#homePage ul').empty()
 
             $.each(response.data, function( key, bet ) {
                 console.log('bet:', bet)
@@ -29,30 +46,22 @@ $(document).ready( async function () {
                     '</li>'
                 )
             })
+            loader(false)
         }
     });
 
-    $('.showHome_js').off("click")
-    $('.showHome_js').on("click", function(e){
-        changeView('homePage')
-    })
-
-    $('.newBet_js').off("click")
-    $('.newBet_js').on("click", function(e){
-        changeView('newBetPage')
-    })
-
     $('.showBet_js').off("click")
-    $('.showBet_js').on("click", function(e){
+    $('.showBet_js').on("click", async function(e){
         changeView('showBetPage')
         let betId = $(this).data('id')
 
-        $.ajax({	
+        await $.ajax({	
             url : 'http://localhost/projets-perso/paris-girafe/index.php/bet/'+betId,
             type : 'GET',
             success : function(response){
                 let bet = response.data
                 console.log('bet:', bet)
+                $('#showBetPage .bet-show').empty()
 
                 let statutName = getStatutName(bet.statut)
 
@@ -61,7 +70,7 @@ $(document).ready( async function () {
                         '<h2>'+bet.name+'</h2>'+
                         '<p>'+bet.description+'</p>'+
                         '<p class="statut '+statutName+'">'+statutName+'</p>'+
-                        '<span class="showBet_js" data-id="'+bet.id+'">'+
+                        '<span class="showHome_js" data-id="'+bet.id+'">'+
                             '<svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
                         '</span>'+
                         '<ul class="votes-list"></ul>'+
@@ -71,17 +80,18 @@ $(document).ready( async function () {
             }
         });
 
-        $.ajax({
+        await $.ajax({
             url : 'http://localhost/projets-perso/paris-girafe/index.php/vote/getVotesByBetId?betId='+betId,
             type : 'GET',
             success : function(response){
-
                 console.log(response.data)
+                $('#showBetPage .votes-list').empty()
+
                 if(response.data){
                     $.each(response.data, function( key, vote ) {
     
                         $('#showBetPage .votes-list').append(
-                            '<li class="vote-elem">'+
+                            '<li class="vote-elem voted">'+
                                 '<p>'+vote.date+'</p>'+
                                 '<p>'+vote.user_id+'</p>'+
                             '</li>'
@@ -92,15 +102,56 @@ $(document).ready( async function () {
                         '<li class="no-vote">Personne n\'a encore voté !</li>'
                     )
                 }
+
+                $('#showBetPage .votes-list').prepend(
+                    '<div class="btn-box">'+
+                        '<div class="elipse vote newVote_js">Voter</div>'+
+                    '</div>'
+                )
             }
         })
+        loader(false)
+        allowActions()
+    })
+}
+
+function showVoteForm(ul) {
+    $('#showBetPage .votes-list .btn-box').css('display', 'none')
+    $(ul).append(
+        '<li class="vote-elem form">'+
+            '<div>'+
+                '<img>'+
+                '<p>Je vote le </p>'+
+                '<input type="date">'+
+            '</div>'+
+            '<div class="postVote_js">Voter</div>'+
+        '</li>'
+    )
+}
+
+function allowActions() {
+    $('.showHome_js').off("click")
+    $('.showHome_js').on("click", function(e){
+        changeView('homePage')
+        getBetList()
+    })
+
+    $('.newBet_js').off("click")
+    $('.newBet_js').on("click", function(e){
+        changeView('newBetPage')
+    })
+
+    $('.newVote_js').off("click")
+    $('.newVote_js').on("click", function(e){
+        console.log($(this).parent())
+        showVoteForm($(this).parent().parent())
     })
 
     $('.showUser_js').off("click")
     $('.showUser_js').on("click", function(e){
         changeView('showUserPage')
     })
-})
+}
 
 function changeView(newView){
     $('.page-content').addClass('hidden')
@@ -135,12 +186,12 @@ function createNav(){
     )
     $('footer').html(
         `<nav>
-            <div class="elipse list showHome_js">
+            <div class="elipse yellow showHome_js">
                 <svg width="110px" height="110px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 8C5.10457 8 6 7.10457 6 6C6 4.89543 5.10457 4 4 4C2.89543 4 2 4.89543 2 6C2 7.10457 2.89543 8 4 8Z" fill="#FFF"/> <path d="M4 14C5.10457 14 6 13.1046 6 12C6 10.8954 5.10457 10 4 10C2.89543 10 2 10.8954 2 12C2 13.1046 2.89543 14 4 14Z" fill="#FFF"/> <path d="M6 18C6 19.1046 5.10457 20 4 20C2.89543 20 2 19.1046 2 18C2 16.8954 2.89543 16 4 16C5.10457 16 6 16.8954 6 18Z" fill="#FFF"/> <path d="M21 7.5C21.5523 7.5 22 7.05228 22 6.5V5.5C22 4.94772 21.5523 4.5 21 4.5H9C8.44772 4.5 8 4.94772 8 5.5V6.5C8 7.05228 8.44772 7.5 9 7.5H21Z" fill="#FFF"/> <path d="M22 12.5C22 13.0523 21.5523 13.5 21 13.5H9C8.44772 13.5 8 13.0523 8 12.5V11.5C8 10.9477 8.44772 10.5 9 10.5H21C21.5523 10.5 22 10.9477 22 11.5V12.5Z" fill="#FFF"/> <path d="M21 19.5C21.5523 19.5 22 19.0523 22 18.5V17.5C22 16.9477 21.5523 16.5 21 16.5H9C8.44772 16.5 8 16.9477 8 17.5V18.5C8 19.0523 8.44772 19.5 9 19.5H21Z" fill="#FFF"/>
                 </svg>
             </div>
-            <div class="elipse user showUser_js">
+            <div class="elipse yellow showUser_js">
                 <svg width="110px" height="110px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#FFF" stroke="#FFF">
                     <path d="M31.278,25.525C34.144,23.332,36,19.887,36,16c0-6.627-5.373-12-12-12c-6.627,0-12,5.373-12,12 c0,3.887,1.856,7.332,4.722,9.525C9.84,28.531,5,35.665,5,44h38C43,35.665,38.16,28.531,31.278,25.525z M16,16c0-4.411,3.589-8,8-8 s8,3.589,8,8c0,4.411-3.589,8-8,8S16,20.411,16,16z M24,28c6.977,0,12.856,5.107,14.525,12H9.475C11.144,33.107,17.023,28,24,28z"/>
                 </svg>

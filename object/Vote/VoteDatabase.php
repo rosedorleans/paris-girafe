@@ -37,7 +37,7 @@ class VoteDatabase extends Database{
                                       WHERE `bet_id`=:betId");
         $query->bindParam(':betId', $betId);
         $query->execute();
-        return $query->fetchObject(Vote::class);
+        return $query->fetchAll(PDO::FETCH_CLASS, Vote::class);
     }
 
     /**

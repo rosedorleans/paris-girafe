@@ -108,6 +108,7 @@ class VoteController extends MainController{
      */
 
      private function getVotesByBetId($betId){
+
         $O_response = new Response();
         $O_voteDatabase = new VoteDatabase();
 
