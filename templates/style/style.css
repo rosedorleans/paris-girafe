@@ -1,0 +1,151 @@
+@charset "UTF-8";
+/* vars */
+:root {
+  /* colors */
+  --sunglow: #ffcc35;
+  --chocolate-web: #dc7126;
+  --carnelian: #b81616;
+  --green-ryb: #68b306;
+  --avocado: #4f8904;
+  --background: #eeeeee;
+  --cultured: #f5f6f7;
+  --gainsboro: #dedfdf;
+  --silver: #c7c7c7;
+  --manatee: #979ba7;
+  --granite-gray: #636363;
+  --eerie-black: #262626;
+  --cosmic-latte: #fdf4e0;
+}
+
+body {
+  margin: 0;
+}
+body .hidden {
+  display: none;
+}
+body .elipse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3vh;
+  width: 3vh;
+  padding: 30px;
+  border-radius: 50%;
+  box-shadow: 0 0 7px 1px #adadad;
+}
+body .elipse.plus {
+  background-color: var(--sunglow);
+}
+body .elipse.list {
+  background-color: var(--chocolate-web);
+}
+body .elipse.user {
+  background-color: var(--carnelian);
+}
+body .elipse svg {
+  height: 80px;
+  width: 80px;
+}
+body header {
+  position: relative;
+}
+body header h1 {
+  margin: 0;
+  padding: 5vh 0 2vh 8vw;
+  font-size: 15vw;
+  font-style: normal;
+  font-weight: 400;
+  font-family: "Titan One", cursive;
+  background: linear-gradient(101.39deg, var(--sunglow) 3.41%, var(--carnelian) 91.01%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+body header h1 span:nth-of-type(1) {
+  margin-right: -10vw;
+}
+body header h1 span:nth-of-type(2) {
+  margin-left: -12vw;
+}
+body header h1 svg {
+  height: 20vw;
+}
+body .page-content {
+  font-family: "Montserrat", sans-serif;
+}
+body .page-content .bet-elem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 3vw;
+  padding: 6vw;
+  font-size: 4.5vw;
+  background-color: rgba(220, 113, 38, 0.1490196078);
+  border-radius: 10px;
+}
+body .page-content .bet-elem h2 {
+  margin: 0;
+  font-size: 5vw;
+}
+body .page-content .bet-elem p {
+  margin: 2vh 0;
+  font-size: 4vw;
+}
+body .page-content .bet-elem .statut {
+  display: block;
+  width: 55px;
+  padding: 2vh 4vw;
+  text-align: center;
+  color: #FFF;
+  font-size: 3.5vw;
+  font-weight: bold;
+  border-radius: 10px;
+}
+body .page-content .bet-elem .statut.ouvert {
+  background-color: var(--avocado);
+}
+body .page-content .bet-elem .statut.terminé {
+  background-color: var(--carnelian);
+}
+body .page-content .bet-elem .statut.archivé {
+  background-color: var(--granite-gray);
+}
+body .page-content .bet-elem .showBet_js {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+body .page-content#homePage .elipse {
+  margin: 2vh auto;
+  background-color: var(--sunglow);
+}
+body .page-content#homePage ul.bet-list {
+  max-height: 60vh;
+  max-width: 95vw;
+  overflow-y: scroll;
+  margin: 0 auto;
+  padding: 0;
+}
+body .page-content#homePage ul.bet-list::-webkit-scrollbar {
+  width: 8px;
+}
+body .page-content#homePage ul.bet-list::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 10px;
+}
+body .page-content#homePage ul.bet-list::-webkit-scrollbar-thumb {
+  background-color: var(--sunglow);
+  border-radius: 10px;
+}
+body .page-content#showBetPage .bet-elem .votes-list {
+  list-style-type: none;
+}
+body footer nav {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+}/*# sourceMappingURL=style.css.map */

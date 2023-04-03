@@ -1,0 +1,182 @@
+/* vars */
+
+:root {
+    /* colors */
+    --sunglow: #ffcc35;
+    --chocolate-web: #dc7126;
+    --carnelian: #b81616;
+    --green-ryb: #68b306;
+    --avocado: #4f8904;
+    --background: #eeeeee;
+    --cultured: #f5f6f7; 
+    --gainsboro: #dedfdf;
+    --silver: #c7c7c7;
+    --manatee: #979ba7;
+    --granite-gray: #636363;
+    --eerie-black: #262626;
+    --cosmic-latte: #fdf4e0;
+}
+
+body {
+    margin: 0;
+
+    .hidden {
+        display: none;
+    }
+
+    .elipse {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3vh;
+        width: 3vh;
+        padding: 30px;
+        border-radius: 50%;
+        box-shadow: 0 0 7px 1px #adadad;
+
+        &.plus {
+            background-color: var(--sunglow);
+        }
+        &.list {
+            background-color: var(--chocolate-web);
+        }
+        &.user {
+            background-color: var(--carnelian);
+        }
+
+        svg {
+            height: 80px;
+            width: 80px;
+        }
+    }
+
+    header {
+        position: relative;
+
+        h1 {
+            margin: 0;
+            padding: 5vh 0 2vh 8vw;
+            font-size: 15vw;
+            font-style: normal;
+            font-weight: 400;
+            font-family: 'Titan One', cursive;
+            background: linear-gradient(101.39deg, var(--sunglow) 3.41%, var(--carnelian) 91.01%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+    
+            span:nth-of-type(1){
+                margin-right: -10vw;
+            }
+            span:nth-of-type(2){
+                margin-left: -12vw;
+            }
+            svg {
+                height: 20vw;
+
+            }
+        }
+    }
+    
+    .page-content {
+        font-family: 'Montserrat', sans-serif;
+
+        .bet-elem {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: 3vw;
+            padding: 6vw;
+            font-size: 4.5vw;
+            background-color: #dc712626;
+            border-radius: 10px;
+
+            h2 {
+                margin: 0;
+                font-size: 5vw;
+            }
+
+            p {
+                margin: 2vh 0;
+                font-size: 4vw;
+            }
+
+            .statut {
+                display: block;
+                width: 55px;
+                padding: 2vh 4vw;
+                text-align: center;
+                color: #FFF;
+                font-size: 3.5vw;
+                font-weight: bold;
+                border-radius: 10px;
+
+                &.ouvert{
+                    background-color: var(--avocado);
+                }
+                &.terminé{
+                    background-color: var(--carnelian);
+                }
+                &.archivé {
+                    background-color: var(--granite-gray);
+                }
+            }
+
+            .showBet_js {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+            }
+        }
+    
+        &#homePage {
+            .elipse {
+                margin: 2vh auto;
+                background-color: var(--sunglow);
+            }
+            ul.bet-list {
+                max-height: 60vh;
+                max-width: 95vw;
+                overflow-y: scroll;
+                margin: 0 auto;
+                padding: 0;
+
+                &::-webkit-scrollbar {
+                    width: 8px;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: #fff;
+                    border-radius: 10px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: var(--sunglow);
+                    border-radius: 10px;
+                }
+            }
+        }
+
+        &#newBetPage {
+
+        }
+
+        &#showBetPage {
+
+            .bet-elem {
+
+                .votes-list {
+                    list-style-type: none;
+                }
+            }
+        }
+    }
+
+    footer nav {
+        position: absolute;
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        width: 100%;
+    }
+}
