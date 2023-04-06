@@ -11,6 +11,10 @@ class ComposerStaticInit9c44cefcdc04081dce53a5f8e6c00e95
         array (
             'Vote\\' => 5,
         ),
+        'U' => 
+        array (
+            'User\\' => 5,
+        ),
         'T' => 
         array (
             'Tools\\' => 6,
@@ -25,6 +29,10 @@ class ComposerStaticInit9c44cefcdc04081dce53a5f8e6c00e95
         'Vote\\' => 
         array (
             0 => __DIR__ . '/../..' . '/object/vote',
+        ),
+        'User\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/object/user',
         ),
         'Tools\\' => 
         array (
@@ -41,6 +49,9 @@ class ComposerStaticInit9c44cefcdc04081dce53a5f8e6c00e95
         'Bet\\BetController' => __DIR__ . '/../..' . '/object/Bet/BetController.php',
         'Bet\\BetDatabase' => __DIR__ . '/../..' . '/object/Bet/BetDatabase.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'User\\User' => __DIR__ . '/../..' . '/object/User/User.php',
+        'User\\UserController' => __DIR__ . '/../..' . '/object/User/UserController.php',
+        'User\\UserDatabase' => __DIR__ . '/../..' . '/object/User/UserDatabase.php',
         'Vote\\Vote' => __DIR__ . '/../..' . '/object/Vote/Vote.php',
         'Vote\\VoteController' => __DIR__ . '/../..' . '/object/Vote/VoteController.php',
         'Vote\\VoteDatabase' => __DIR__ . '/../..' . '/object/Vote/VoteDatabase.php',

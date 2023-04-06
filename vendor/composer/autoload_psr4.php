@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Vote\\' => array($baseDir . '/object/vote'),
+    'User\\' => array($baseDir . '/object/user'),
     'Tools\\' => array($baseDir . '/tools'),
     'Bet\\' => array($baseDir . '/object/bet'),
 );

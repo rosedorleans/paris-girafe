@@ -1,13 +1,13 @@
 <?php
-namespace Vote;
+namespace User;
 
-Use Vote\Vote;
-use Vote\VoteDatabase;
+Use User\User;
+use User\UserDatabase;
 Use Tools\MainController;
 Use Tools\Response;
 
-class VoteController extends MainController{
-    private $route = ["getVotesByBetId"];
+class UserController extends MainController{
+    private $route = [];
 
     /**
      * @param String|null $call: function name
@@ -68,90 +68,66 @@ class VoteController extends MainController{
     }
     
     /**
-     * @param int|null $id: Vote id
-     * @return JSON with Vote object
-     * Use to get Vote object by id
-     * If id is null, get all Vote
+     * @param int|null $id: User id
+     * @return JSON with User object
+     * Use to get User object by id
+     * If id is null, get all User
      */
 
     private function get($id = null){
         $O_response = new Response();
-        $O_voteDatabase = new VoteDatabase();
+        $O_UserDatabase = new UserDatabase();
         if($id){
-            $O_vote = $O_voteDatabase->getVote($id);
+            $O_User = $O_UserDatabase->getUser($id);
             $data=[
-                "id" => $O_vote->getId(),
-                "date" => $O_vote->getDate(),
-                "bet_id" => $O_vote->getBetId(),
-                "user_id" => $O_vote->getUserId()
+                "id" => $O_User->getId(),
+                "username" => $O_User->getUsername(),
+                "password" => $O_User->getPassword(),
+                "image" => $O_User->getImage(),
+                "nb_wins" => $O_User->getNbWins(),
+                "nb_fails" => $O_User->getNbFails(),
+                "ratio" => $O_User->getRatio(),
+                "roles" => $O_User->getRoles()
             ];
         }else{
             $data =[];
-            foreach($O_voteDatabase->getAllVote() as $O_vote){
+            foreach($O_UserDatabase->getAllUser() as $O_User){
                 $data[]=[
-                    "id" => $O_vote->getId(),
-                    "date" => $O_vote->getDate(),
-                    "bet_id" => $O_vote->getBetId(),
-                    "user_id" => $O_vote->getUserId()
+                    "id" => $O_User->getId(),
+                    "username" => $O_User->getUsername(),
+                    "password" => $O_User->getPassword(),
+                    "image" => $O_User->getImage(),
+                    "nb_wins" => $O_User->getNbWins(),
+                    "nb_fails" => $O_User->getNbFails(),
+                    "ratio" => $O_User->getRatio(),
+                    "roles" => $O_User->getRoles()
                 ];
             }
         }
         $O_response->renderResponse(Response::SUCCESS_GET, $data);
     }
-
-
-        /**
-     * @param int|null $id: Vote id
-     * @return JSON with Vote object
-     * Use to get Vote object by id
-     * If id is null, get all Vote
-     */
-
-     private function getVotesByBetId($betId){
-
-        $O_response = new Response();
-        $O_voteDatabase = new VoteDatabase();
-
-        $T_O_vote = $O_voteDatabase->getVotesByBetId($betId);
-        $data = [];
-        if($T_O_vote){
-            foreach($T_O_vote as $O_vote){
-                $data[]=[
-                    "id" => $O_vote->getId(),
-                    "date" => $O_vote->getDate(),
-                    "bet_id" => $O_vote->getBetId(),
-                    "user_id" => $O_vote->getUserId()
-                ];
-            };
-        }
-        if(!empty($data))
-            $O_response->renderResponse(Response::SUCCESS_GET, $data);
-        else
-            $O_response->renderResponse(Response::ERROR_GET_EMPTY); 
-    }
  
-
     /**
      * @param Array T_data
-     * @return JSON with Vote object
+     * @return JSON with User object
      */
 
      private function create($T_data){
         $O_response = new Response();
-        $O_vote = new Vote();
-        var_dump($T_data);
-        $O_vote->setBetId($T_data["betId"]);
-        $O_vote->setDate($T_data["date"]);
-        $O_vote->setUserId($T_data["userId"]);
-        var_dump($O_vote);
-        $O_voteDatabase = new VoteDatabase();
-        $O_vote = $O_voteDatabase->createVote($O_vote);
-        if($O_vote)
+        $O_User = new User();
+        $O_UserDatabase = new UserDatabase();
+        $O_User->hydrate($T_data);
+        $O_User = $O_UserDatabase->createUser($O_User);
+        if($O_User)
             $data=[
-                "id" => $O_vote->getId(),
-                "date" => $O_vote->getDate(),
-                "bet_id" => $O_vote->getBetId(),
-                "user_id" => $O_vote->getUserId()
+                "id" => $O_User->getId(),
+                "username" => $O_User->getUsername(),
+                "password" => $O_User->getPassword(),
+                "image" => $O_User->getImage(),
+                "nb_wins" => $O_User->getNbWins(),
+                "nb_fails" => $O_User->getNbFails(),
+                "ratio" => $O_User->getRatio(),
+                "roles" => $O_User->getRoles()
             ];
             
 		if(!empty($data))
@@ -162,21 +138,25 @@ class VoteController extends MainController{
 
     /**
      * @param Array T_data
-     * @return JSON with Vote object
+     * @return JSON with User object
      */
 
     private function update($T_data){
         $O_response = new Response();
-        $O_vote = new Vote();
-        $O_voteDatabase = new VoteDatabase();
-        $O_vote->hydrate($T_data);
-        $O_vote = $O_voteDatabase->updateVote($O_vote);
-        if($O_vote)
+        $O_User = new User();
+        $O_UserDatabase = new UserDatabase();
+        $O_User->hydrate($T_data);
+        $O_User = $O_UserDatabase->updateUser($O_User);
+        if($O_User)
             $data=[
-                "id" => $O_vote->getId(),
-                "date" => $O_vote->getDate(),
-                "bet_id" => $O_vote->getBetId(),
-                "user_id" => $O_vote->getUserId()
+                "id" => $O_User->getId(),
+                "username" => $O_User->getUsername(),
+                "password" => $O_User->getPassword(),
+                "image" => $O_User->getImage(),
+                "nb_wins" => $O_User->getNbWins(),
+                "nb_fails" => $O_User->getNbFails(),
+                "ratio" => $O_User->getRatio(),
+                "roles" => $O_User->getRoles()
             ];
             
 		if(!empty($data))

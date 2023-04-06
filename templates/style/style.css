@@ -21,7 +21,7 @@ body {
   margin: 0;
 }
 body .hidden {
-  display: none;
+  display: none !important;
 }
 body #blockedPage {
   position: fixed;
@@ -76,16 +76,17 @@ body .elipse {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3vh;
-  width: 3vh;
-  padding: 30px;
+  height: 5vh;
+  width: 5vh;
+  padding: 15px;
   border-radius: 50%;
 }
 body .elipse.yellow {
   background-color: inherit;
   border: 3px solid var(--sunglow);
 }
-body .elipse.yellow svg {
+body .elipse.yellow svg,
+body .elipse.yellow svg path {
   fill: var(--sunglow);
 }
 body .elipse.yellow.active {
@@ -95,7 +96,8 @@ body .elipse.orange {
   background-color: inherit;
   border: 3px solid var(--chocolate-web);
 }
-body .elipse.orange svg {
+body .elipse.orange svg,
+body .elipse.orange svg path {
   fill: var(--chocolate-web);
 }
 body .elipse.orange.active {
@@ -105,7 +107,8 @@ body .elipse.red {
   background-color: inherit;
   border: 3px solid var(--carnelian);
 }
-body .elipse.red svg {
+body .elipse.red svg,
+body .elipse.red svg path {
   fill: var(--carnelian);
 }
 body .elipse.red.active {
@@ -115,7 +118,7 @@ body .elipse svg {
   height: 80px;
   width: 80px;
 }
-body .elipse.active svg {
+body .elipse.active svg, body .elipse.active svg path {
   fill: #FFF;
 }
 body header {
@@ -143,10 +146,16 @@ body header h1 span:nth-of-type(2) {
 body header h1 svg {
   height: 20vw;
 }
+body header .showHome_js {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 body .page-content {
   font-family: "Montserrat", sans-serif;
 }
-body .page-content .new-bet-btn {
+body .page-content .newBet_js,
+body .page-content .newVote_js {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -155,10 +164,12 @@ body .page-content .new-bet-btn {
   padding: 10px;
   color: #FFF;
   background-color: var(--chocolate-web);
+  font-size: 4vw;
   font-weight: 500;
   border-radius: 10px;
 }
-body .page-content .new-bet-btn p {
+body .page-content .newBet_js p,
+body .page-content .newVote_js p {
   margin: 0;
 }
 body .page-content .bet-elem {
@@ -166,7 +177,7 @@ body .page-content .bet-elem {
   display: flex;
   flex-direction: column;
   margin: 3vw;
-  padding: 6vw;
+  padding: 2vh 3vw;
   font-size: 4.5vw;
   border: 3px solid var(--chocolate-web);
   border-radius: 10px;
@@ -202,35 +213,21 @@ body .page-content .bet-elem .statut.archivé {
   color: var(--granite-gray);
   border-color: var(--granite-gray);
 }
+body .page-content .bet-elem .user-name {
+  font-weight: 600;
+}
+body .page-content .bet-elem .date {
+  min-width: 95px;
+  padding: 1vh 2vw;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid;
+  border-radius: 10px;
+}
 body .page-content .bet-elem span:has(svg) {
   position: absolute;
   top: 10px;
   right: 20px;
-}
-body .page-content .bet-elem ul {
-  padding: 0;
-}
-body .page-content .bet-elem ul li.vote-elem {
-  align-items: center;
-}
-body .page-content .bet-elem ul li.vote-elem.voted {
-  display: flex;
-  padding: 10px;
-  background-color: rgba(220, 113, 38, 0.2196078431);
-}
-body .page-content .bet-elem ul li.vote-elem.no-vote {
-  text-align: center;
-  background-color: inherit;
-}
-body .page-content .bet-elem ul li.vote-elem.form {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: rgba(220, 113, 38, 0.2196078431);
-}
-body .page-content .bet-elem ul li.vote-elem.form > div {
-  display: flex;
-  gap: 10px;
 }
 body .page-content .bet-elem .btn-box {
   display: flex;
@@ -240,14 +237,15 @@ body .page-content#homePage {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2vh;
+  margin: 2vh 0;
 }
 body .page-content#homePage .elipse {
   margin: 2vh auto;
   background-color: var(--sunglow);
 }
 body .page-content#homePage ul.bet-list {
-  max-height: 60vh;
-  max-width: 95vw;
+  width: 95vw;
   overflow-y: scroll;
   margin: 0 auto;
   padding: 0;
@@ -263,8 +261,66 @@ body .page-content#homePage ul.bet-list::-webkit-scrollbar-thumb {
   background-color: var(--sunglow);
   border-radius: 10px;
 }
-body .page-content#showBetPage .bet-elem .votes-list {
+body .page-content#showBetPage .bet-elem h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body .page-content#showBetPage .bet-elem h2 .statut {
+  margin: 0;
+  padding: 1vh 2vw;
+}
+body .page-content#showBetPage .bet-elem .newVote_js {
+  margin-bottom: 1vh;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  padding: 0;
   list-style-type: none;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  font-size: 2vw;
+  background-color: rgba(220, 113, 38, 0.2196078431);
+  gap: 3vw;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem p {
+  margin: 0;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.form {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgba(220, 113, 38, 0.2196078431);
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.form select,
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.form input[type=date],
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.form .postVote_js {
+  padding: 5px 10px;
+  font-size: 4vw;
+  border: none;
+  border-radius: 5px;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.form .postVote_js {
+  color: #FFF;
+  font-weight: 500;
+  background-color: #dc7126;
+}
+body .page-content#showBetPage .bet-elem ul.votes-list li.vote-elem.no-vote {
+  text-align: center;
+  background-color: inherit;
 }
 body footer nav {
   position: absolute;

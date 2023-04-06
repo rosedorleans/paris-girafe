@@ -21,7 +21,7 @@ body {
     margin: 0;
 
     .hidden {
-        display: none;
+        display: none !important;
     }
 
     #blockedPage {
@@ -82,16 +82,17 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 3vh;
-        width: 3vh;
-        padding: 30px;
+        height: 5vh;
+        width: 5vh;
+        padding: 15px;
         border-radius: 50%;
 
         &.yellow {
             background-color: inherit;
             border: 3px solid var(--sunglow);
 
-            svg {
+            svg, 
+            svg path {
                 fill: var(--sunglow);
             }
 
@@ -103,7 +104,8 @@ body {
             background-color: inherit;
             border: 3px solid var(--chocolate-web);
 
-            svg {
+            svg, 
+            svg path {
                 fill: var(--chocolate-web);
             }
 
@@ -115,7 +117,8 @@ body {
             background-color: inherit;
             border: 3px solid var(--carnelian);
 
-            svg {
+            svg, 
+            svg path {
                 fill: var(--carnelian);
             }
 
@@ -129,7 +132,8 @@ body {
             width: 80px;
         }
 
-        &.active svg {
+        &.active svg, 
+        &.active svg path {
             fill: #FFF;
         }
     }
@@ -161,12 +165,19 @@ body {
 
             }
         }
+
+        .showHome_js {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     }
     
     .page-content {
         font-family: 'Montserrat', sans-serif;
 
-        .new-bet-btn {
+        .newBet_js,
+        .newVote_js {
             display: flex;
             justify-content: center;
             gap: 10px;
@@ -175,6 +186,7 @@ body {
             padding: 10px;
             color: #FFF;
             background-color: var(--chocolate-web);
+            font-size: 4vw;
             font-weight: 500;
             border-radius: 10px;
 
@@ -188,7 +200,7 @@ body {
             display: flex;
             flex-direction: column;
             margin: 3vw;
-            padding: 6vw;
+            padding: 2vh 3vw;
             font-size: 4.5vw;
             border: 3px solid var(--chocolate-web);
             border-radius: 10px;
@@ -228,42 +240,23 @@ body {
                 }
             }
 
+            .user-name {
+                font-weight: 600;
+            }
+
+            .date {
+                min-width: 95px;
+                padding: 1vh 2vw;
+                text-align: center;
+                font-weight: 600;
+                border: 1px solid;
+                border-radius: 10px;
+            }
+
             span:has(svg) {
                 position: absolute;
                 top: 10px;
                 right: 20px;
-            }
-
-            ul {
-                padding: 0;
-
-                li.vote-elem {
-                    align-items: center;
-
-                    &.voted {
-                        display: flex;
-                        padding: 10px;
-                        background-color: #dc712638;
-                    }
-
-                    &.no-vote {
-                        text-align: center;
-                        background-color: inherit;
-                    }
-
-                    &.form {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 10px;
-                        background-color: #dc712638;
-
-                        > div {
-                            display: flex;
-                            gap: 10px;
-                        }
-                    }
-
-                }
             }
 
             .btn-box {
@@ -276,14 +269,15 @@ body {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 2vh;
+            margin: 2vh 0;
 
             .elipse {
                 margin: 2vh auto;
                 background-color: var(--sunglow);
             }
             ul.bet-list {
-                max-height: 60vh;
-                max-width: 95vw;
+                width: 95vw;
                 overflow-y: scroll;
                 margin: 0 auto;
                 padding: 0;
@@ -310,8 +304,76 @@ body {
 
             .bet-elem {
 
-                .votes-list {
+                h2 {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .statut {
+                        margin: 0;
+                        padding: 1vh 2vw;
+                    }
+                }
+
+                .newVote_js {
+                    margin-bottom: 1vh;
+                }
+
+                ul.votes-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1vh;
+                    padding: 0;
                     list-style-type: none;
+        
+                    li.vote-elem {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 10px;
+                        align-items: center;
+                        font-size: 2vw;
+                        background-color: #dc712638;
+                        gap: 3vw;
+
+                        img {
+                            height: 40px;
+                            width: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+    
+                        p {
+                            margin: 0;
+                        }
+
+                        &.form {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 10px;
+                            background-color: #dc712638;
+    
+                            select,
+                            input[type="date"],
+                            .postVote_js {
+                                padding: 5px 10px;
+                                font-size: 4vw;
+                                border: none;
+                                border-radius: 5px;
+                            }
+    
+                            .postVote_js {
+                                color: #FFF;
+                                font-weight: 500;
+                                background-color: #dc7126;
+                            }
+                        }
+    
+                        &.no-vote {
+                            text-align: center;
+                            background-color: inherit;
+                        }
+    
+                    }
                 }
             }
         }
